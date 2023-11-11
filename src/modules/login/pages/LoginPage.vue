@@ -34,7 +34,6 @@
 <script>
 import { mapActions } from "vuex";
 import { ElMessage } from "element-plus";
-// import axios from "axios";
 
 export default {
   data() {
@@ -69,6 +68,7 @@ export default {
       }
     },
   },
+<<<<<<< HEAD
   // async created() {
   //   const data = {
   //     username: "julianArdila",
@@ -81,5 +81,7 @@ export default {
 
   //   console.log("Respuesta", resp);
   // },
+=======
+>>>>>>> 764a48599fcba0eef99fd84fb783cd9523044e8a
 };
 </script>

@@ -4,8 +4,7 @@ export const loginAction = async ({ commit }, credentiales) => {
   try {
     const data = await registerServiceApi.post("/auth/users", credentiales, {
       headers: {
-        "Content-Type": "application/json", // Configura el encabezado Content-Type
-        Accept: "*/*",
+        "Content-Type": "application/json",
       },
     });
     const { token, id_tenant } = data.data;
