@@ -68,7 +68,6 @@ export default {
       }
     },
   },
-<<<<<<< HEAD
   // async created() {
   //   const data = {
   //     username: "julianArdila",
@@ -81,7 +80,5 @@ export default {
 
   //   console.log("Respuesta", resp);
   // },
-=======
->>>>>>> 764a48599fcba0eef99fd84fb783cd9523044e8a
 };
 </script>
