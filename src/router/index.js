@@ -1,26 +1,58 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
   {
-    path: "/",
-    name: "home",
-    component: HomeView,
+    path: "/login",
+    name: "Login",
+    component: () => import("../modules/login/pages/LoginPage.vue"),
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/register",
+    name: "Register",
+    component: () => import("../modules/login/pages/RegisterPage.vue"),
+  },
+  {
+    path: "/main",
+    name: "Main",
+    component: () => import("../modules/layouts/MainUsers.vue"),
+    // meta: { requiresAuth: true },
+    alias: "/",
+    children: [
+      {
+        path: "records/pets",
+        name: "Pets",
+        component: () => import("../modules/register/pages/RegisterPet.vue"),
+      },
+      {
+        path: "records/owners",
+        name: "Owners",
+        component: () => import("../modules/register/pages/RegisterOwner.vue"),
+      },
+      {
+        path: "clinic",
+        name: "Clinic",
+        component: () => import("../modules/main/pages/ClinicVet.vue"),
+      },
+    ],
   },
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = sessionStorage.getItem("token");
+
+  if (
+    to.matched.some((record) => record.meta.requiresAuth) &&
+    !isAuthenticated
+  ) {
+    next({ path: "/login" });
+  } else {
+    next();
+  }
 });
 
 export default router;
