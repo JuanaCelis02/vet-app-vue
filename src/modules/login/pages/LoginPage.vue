@@ -22,10 +22,28 @@
             placeholder="Ingrese contraseña"
           />
         </div>
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+        <div ref="recaptcha" class="g-recaptcha" style="margin-top: 5px"></div>
+        <button type="submit" class="btn btn-primary" style="margin-top: 10px">
+          Iniciar Sesión
+        </button>
+        <button
+          @click="google"
+          class="btn btn-primary"
+          style="margin-top: 10px"
+        >
+          Iniciar Sesión con Google
+        </button>
+        <button
+          @click="facebook"
+          class="btn btn-primary"
+          style="margin-top: 10px"
+        >
+          Iniciar Sesión con Facebook
+        </button>
       </form>
+
       <p class="text-center mt-4">
-        <router-link to="/register">¿No tienes cuenta? Registrate</router-link>
+        <router-link to="/register">¿No tienes cuenta? Regístrate</router-link>
       </p>
     </div>
   </div>
@@ -41,22 +59,35 @@ export default {
       username: "",
       email: "",
       password: "",
+      recaptchaInstance: null, // Almacena la instancia de reCAPTCHA
     };
   },
   methods: {
     ...mapActions("login", ["loginAction"]),
     async loginMethod() {
       try {
-        const credentials = {
-          username: this.username,
-          password: this.password,
-        };
-        const resLogin = await this.loginAction(credentials);
-        if (resLogin) {
-          this.$router.push("/main");
+        // Verifica si reCAPTCHA está resuelto
+        const isRecaptchaSolved = await this.verifyRecaptcha();
+
+        if (isRecaptchaSolved) {
+          const credentials = {
+            username: this.username,
+            password: this.password,
+          };
+
+          const resLogin = await this.loginAction(credentials);
+
+          if (resLogin) {
+            this.$router.push("/main");
+          } else {
+            ElMessage({
+              message: "Credenciales Inválidas",
+              type: "error",
+            });
+          }
         } else {
           ElMessage({
-            message: "Credenciales Invalidas",
+            message: "Por favor, completa la verificación reCAPTCHA",
             type: "error",
           });
         }
@@ -67,18 +98,31 @@ export default {
         });
       }
     },
-  },
-  // async created() {
-  //   const data = {
-  //     username: "julianArdila",
-  //     password: "admin123",
-  //   };
-  //   const resp = await axios.post(
-  //     "https://microservice-register-w3antys34q-uc.a.run.app/api/v1/auth/users",
-  //     data
-  //   );
+    async verifyRecaptcha() {
+      return new Promise((resolve) => {
+        // Verifica si reCAPTCHA está resuelto
+        if (this.recaptchaInstance) {
+          this.recaptchaInstance.execute();
+          this.recaptchaInstance.reset();
 
-  //   console.log("Respuesta", resp);
-  // },
+          // El resultado de reCAPTCHA se manejará en la devolución de llamada "onSubmit"
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    },
+    // Función de devolución de llamada para el éxito de reCAPTCHA
+    onSubmit() {
+      // Manejo del captcha exitoso
+    },
+  },
+
+  mounted() {
+    this.recaptchaInstance = window.grecaptcha.render(this.$refs.recaptcha, {
+      sitekey: "6LfF1PQnAAAAABAKnlDnQdragoFNGYkOx3anuxqz",
+      callback: this.onSubmit,
+    });
+  },
 };
 </script>

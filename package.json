@@ -12,8 +12,12 @@
     "bootstrap": "^5.3.2",
     "core-js": "^3.8.3",
     "element-plus": "^2.4.1",
+    "firebase": "^10.6.0",
     "vue": "^3.2.13",
+    "vue-recaptcha-v3": "^2.0.1",
     "vue-router": "^4.0.3",
+    "vue-social-auth": "^1.4.9",
+    "vue3-google-oauth2": "^1.0.7",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
