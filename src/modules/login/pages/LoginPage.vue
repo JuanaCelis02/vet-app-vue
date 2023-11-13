@@ -32,6 +32,11 @@
               placeholder="Ingrese contraseña"
             />
           </div>
+          <div
+            ref="recaptcha"
+            class="g-recaptcha"
+            style="margin-top: 15px"
+          ></div>
           <div class="d-flex justify-content-center mb-3">
             <button class="btn btn-helpet" @click="loginMethod">
               Iniciar sesión
@@ -69,6 +74,7 @@ export default {
       username: "",
       password: "",
       appId: process.env.VUE_APP_APP_ID,
+      recaptchaInstance: null,
     };
   },
   setup() {
@@ -84,16 +90,24 @@ export default {
     ...mapActions("login", ["loginAction"]),
     async loginMethod() {
       try {
-        const credentials = {
-          username: this.username,
-          password: this.password,
-        };
-        const resLogin = await this.loginAction(credentials);
-        if (resLogin) {
-          this.$router.push("/main");
+        const isRecaptchaSolved = await this.verifyRecaptcha();
+        if (isRecaptchaSolved) {
+          const credentials = {
+            username: this.username,
+            password: this.password,
+          };
+          const resLogin = await this.loginAction(credentials);
+          if (resLogin) {
+            this.$router.push("/main");
+          } else {
+            ElMessage({
+              message: "Credenciales Invalidas",
+              type: "error",
+            });
+          }
         } else {
           ElMessage({
-            message: "Credenciales Invalidas",
+            message: "Por favor, completa la verificación reCAPTCHA",
             type: "error",
           });
         }
@@ -104,6 +118,26 @@ export default {
         });
       }
     },
+    async verifyRecaptcha() {
+      return new Promise((resolve) => {
+        if (this.recaptchaInstance) {
+          this.recaptchaInstance.execute();
+          this.recaptchaInstance.reset();
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    },
+
+    onSubmit() {},
+  },
+  mounted() {
+    this.recaptchaInstance = window.grecaptcha.render(this.$refs.recaptcha, {
+      sitekey: "6LfF1PQnAAAAABAKnlDnQdragoFNGYkOx3anuxqz",
+      callback: this.onSubmit,
+    });
+    this.loginWithFacebook();
   },
 };
 </script>
