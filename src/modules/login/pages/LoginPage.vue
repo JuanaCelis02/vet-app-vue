@@ -1,32 +1,56 @@
 <template>
-  <div class="container mt-5">
-    <div class="col-md-4 card p-5 offset-md-4">
-      <h2 class="mb-3">Iniciar Sesión</h2>
-      <form @submit.prevent="loginMethod">
-        <div class="mb-3">
-          <label for="email" class="form-label">Email</label>
-          <el-input
-            name="email"
-            v-model="username"
-            type="text"
-            placeholder="Ingrese Correo"
-          />
+  <div class="login-container">
+    <div class="row card-login">
+      <div class="col img-cover"></div>
+      <div class="col d-flex">
+        <div
+          class="d-flex flex-column align-items-center justify-content-center"
+        >
+          <div class="d-flex justify-content-center">
+            <div class="helpet-logo"></div>
+          </div>
+          <div class="text-center">
+            <span class="label-title f-25"> ¡Inicia sesión en tu cuenta! </span>
+          </div>
+          <div class="inputs my-3">
+            <label for="email" class="label-title f-20">Username:</label>
+            <input
+              type="text"
+              v-model="username"
+              name="email"
+              class="inputs-login"
+              placeholder="Ingrese Username"
+            />
+          </div>
+          <div class="inputs">
+            <label for="password" class="label-title f-20">Contraseña</label>
+            <input
+              type="password"
+              v-model="password"
+              name="password"
+              class="inputs-login"
+              placeholder="Ingrese contraseña"
+            />
+          </div>
+          <div class="d-flex justify-content-center mb-3">
+            <button class="btn btn-helpet" @click="loginMethod">
+              Iniciar sesión
+            </button>
+          </div>
+          <div>
+            <div
+              class="d-flex justify-content-center align-self-center dflex-column gap-1"
+            >
+              <div class="social">
+                <GoogleLogin :callback="callback"></GoogleLogin>
+              </div>
+              <div class="social">
+                <FacebookLogin :appId="'1523240061773549'" />
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="password" class="form-label">Contraseña</label>
-          <el-input
-            name="password"
-            v-model="password"
-            type="password"
-            show-password
-            placeholder="Ingrese contraseña"
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
-      </form>
-      <p class="text-center mt-4">
-        <router-link to="/register">¿No tienes cuenta? Registrate</router-link>
-      </p>
+      </div>
     </div>
   </div>
 </template>
@@ -34,13 +58,26 @@
 <script>
 import { mapActions } from "vuex";
 import { ElMessage } from "element-plus";
+import FacebookLogin from "@/modules/login/components/FacebookLogin.vue";
 
 export default {
+  components: {
+    FacebookLogin,
+  },
   data() {
     return {
       username: "",
-      email: "",
       password: "",
+      appId: process.env.VUE_APP_APP_ID,
+    };
+  },
+  setup() {
+    const callback = (response) => {
+      console.log("Handle the response", response);
+    };
+
+    return {
+      callback,
     };
   },
   methods: {
@@ -68,17 +105,49 @@ export default {
       }
     },
   },
-  // async created() {
-  //   const data = {
-  //     username: "julianArdila",
-  //     password: "admin123",
-  //   };
-  //   const resp = await axios.post(
-  //     "https://microservice-register-w3antys34q-uc.a.run.app/api/v1/auth/users",
-  //     data
-  //   );
-
-  //   console.log("Respuesta", resp);
-  // },
 };
 </script>
+
+<style scoped>
+.login-container {
+  position: relative;
+  background: rgba(200, 205, 204, 0.82) !important;
+}
+.card-login {
+  width: 880px;
+  height: 650px;
+  background-color: #fff !important;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: 5% 0 0 -440px;
+  border-radius: 10px;
+}
+.img-cover {
+  background-image: url("../../../assets/images/cover-login.jpeg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px 0 0 10px;
+}
+.helpet-logo {
+  width: 118px;
+  height: 176px;
+  background-image: url("../../../assets/images/logo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.inputs-login {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid #cd595a;
+}
+.btn-helpet {
+  margin-top: 50px;
+}
+.social {
+  display: block;
+}
+</style>

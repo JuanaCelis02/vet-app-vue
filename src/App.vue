@@ -4,6 +4,6 @@
 
 <style>
 .router-link-exact-active {
-  color: #13c4a3 !important;
+  color: #cd595a !important;
 }
 </style>

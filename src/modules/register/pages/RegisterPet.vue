@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <h2 class="text-center">Formulario Mascotas</h2>
+  <div class="container mt-5 shadow bg-body-tertiary rounded p-4">
+    <h2 class="text-center form-title">REGISTRO MASCOTA</h2>
     <section class="mt-3">
-      <h3>Información Basica</h3>
+      <h3 class="label-title f-25">Información Basica</h3>
       <div class="row">
         <div class="col">
-          <label for="name" class="form-label">Name</label>
+          <label for="name" class="label-title">Nombre</label>
           <el-input
             name="name"
             v-model="petForm.name"
@@ -14,7 +14,7 @@
           />
         </div>
         <div class="col">
-          <label for="bornYear" class="form-label">Año Nacimiento</label>
+          <label for="bornYear" class="label-title">Año Nacimiento</label>
           <el-input
             name="bornYear"
             v-model="petForm.bornYear"
@@ -22,10 +22,11 @@
             placeholder="Ingrese Año de Nacimiento"
           />
         </div>
+        <div class="col"></div>
       </div>
       <div class="row">
         <div class="col">
-          <label for="color" class="form-label">Color</label>
+          <label for="color" class="label-title">Color</label>
           <el-input
             name="color"
             v-model="petForm.color"
@@ -34,7 +35,7 @@
           />
         </div>
         <div class="col">
-          <label for="gender" class="form-label">Genero</label>
+          <label for="gender" class="label-title">Genero</label>
           <div>
             <el-select
               class="w-100"
@@ -55,7 +56,7 @@
         <div class="col">
           <div class="row">
             <div class="col">
-              <label for="bornYear" class="form-label">Cliente</label>
+              <label for="bornYear" class="label-title">Cliente</label>
               <div>
                 <el-select
                   class="w-100"
@@ -83,7 +84,7 @@
         <div class="col">
           <div class="row">
             <div class="col">
-              <label for="bornYear" class="form-label">Categoria</label>
+              <label for="bornYear" class="label-title">Categoria</label>
               <div>
                 <el-select
                   class="w-100"
@@ -140,7 +141,7 @@
       <h2>Comportamiento</h2>
       <div class="row">
         <div class="col">
-          <label for="specificBehaviors" class="form-label">
+          <label for="specificBehaviors" class="label-title">
             Comportamiento
           </label>
           <el-input
@@ -151,7 +152,7 @@
           />
         </div>
         <div class="col d-flex flex-column">
-          <label for="activityLevel" class="form-label">
+          <label for="activityLevel" class="label-title">
             Nivel de Actividad
           </label>
           <el-input-number
@@ -173,7 +174,7 @@
     <div>
       <div class="row">
         <div class="col">
-          <label for="classe" class="form-label"> Clase </label>
+          <label for="classe" class="label-title"> Clase </label>
           <el-input
             name="medicalConditions"
             v-model="categoryForm.classe"
@@ -182,7 +183,7 @@
           />
         </div>
         <div class="col">
-          <label for="subclass" class="form-label"> Sub Clase </label>
+          <label for="subclass" class="label-title"> Sub Clase </label>
           <el-input
             name="medicalConditions"
             v-model="categoryForm.subclass"
@@ -193,7 +194,7 @@
       </div>
       <div class="row">
         <div class="col">
-          <label for="specie" class="form-label"> Especie </label>
+          <label for="specie" class="label-title"> Especie </label>
           <el-input
             name="medicalConditions"
             v-model="categoryForm.specie"
@@ -202,7 +203,7 @@
           />
         </div>
         <div class="col">
-          <label for="specie" class="form-label"> Raza </label>
+          <label for="specie" class="label-title"> Raza </label>
           <el-input
             name="medicalConditions"
             v-model="categoryForm.breed"
@@ -250,7 +251,7 @@
     <div>
       <div class="row">
         <div class="col">
-          <label for="medicalConditions" class="form-label">
+          <label for="medicalConditions" class="label-title">
             Condiciones Médicas
           </label>
           <el-input
@@ -264,7 +265,7 @@
       <div class="mt-3">
         <div class="row">
           <div class="col">
-            <label for="weight" class="form-label">Peso (Kg)</label>
+            <label for="weight" class="label-title">Peso (Kg)</label>
             <el-input-number
               v-model="petForm.healthInformation.weight"
               :min="1"
@@ -272,7 +273,7 @@
             />
           </div>
           <div class="col">
-            <label for="height" class="form-label">Altura (Cm)</label>
+            <label for="height" class="label-title">Altura (Cm)</label>
             <el-input-number
               v-model="petForm.healthInformation.height"
               :min="1"
@@ -280,7 +281,7 @@
             />
           </div>
           <div class="col">
-            <label for="wingspan" class="form-label">Envergadura (Cm)</label>
+            <label for="wingspan" class="label-title">Envergadura (Cm)</label>
             <el-input-number
               v-model="petForm.healthInformation.wingspan"
               :min="1"
@@ -343,4 +344,8 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.label-title {
+  font-size: 18px;
+}
+</style>

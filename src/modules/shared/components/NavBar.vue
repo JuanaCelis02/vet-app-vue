@@ -1,12 +1,19 @@
 <template>
-  <div class="navbar bg-navbar mb-3">
+  <div class="navbar bg-navbar">
     <div class="d-flex justify-content-between align-items-center w-100">
-      <div class="d-flex align-items-center">
-        <!-- <el-avatar :size="50" :src="userData.imageUrl || circleUrl" />
-        <span class="ms-3">{{ userData.name }} {{ userData.lastName }}</span> -->
-      </div>
-      <div class="me-2">
-        <el-button type="danger" @click="logOutMethod" :icon="Close" circle />
+      <div></div>
+      <div>
+        <button
+          class="btn btn-logout d-flex align-items-center"
+          @click="logOutMethod"
+        >
+          <span class="me-2 f-20">Salir</span>
+          <img
+            src="../../../assets/images/icons/logout.png"
+            width="25"
+            alt="logout"
+          />
+        </button>
       </div>
     </div>
   </div>
@@ -42,6 +49,14 @@ export default {
 
 <style scoped>
 .bg-navbar {
-  background: rgba(252, 122, 30, 0.6);
+  background: #cd595a;
+}
+.btn-logout {
+  height: 25px !important;
+  padding: 0 !important;
+  margin: 8px !important;
+}
+.f-20 {
+  color: #fff;
 }
 </style>

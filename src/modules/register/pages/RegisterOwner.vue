@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container shadow bg-body-tertiary rounded p-5">
     <h2 class="text-center">Formulario Mascotas</h2>
     <section class="mt-3">
       <h2>Test</h2>

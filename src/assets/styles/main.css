@@ -1,3 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Istok+Web:wght@400;700&family=Yellowtail&display=swap');
+
+html {
+  background: rgba(200, 205, 204, 0.82);
+}
 body {
   overflow-y: hidden;
+  font-family: 'Istok Web', sans-serif;
+  font-family: 'Yellowtail', cursive;
+}
+.label-title {
+  color: #334858;
+  font-family: 'Istok Web';
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.form-title {
+  color: #CD595A;
+  font-family: 'Istok Web';
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.f-25 {
+  font-size: 25px !important;
+}
+.f-20 {
+  font-size: 20px;
+}
+.f-30 {
+  font-size: 30px;
+}
+.inputs {
+  display: flex;
+  gap: 5px;
+  flex-direction: column;
+}
+input:focus-visible {
+  outline: none;
+}
+.btn-helpet {
+  padding: 5px 10px !important;
+  border-radius: 10px !important;
+  background-color: #CD595A !important;
+  font-size: 20px !important;
+  color: #FFF !important;
+}
+.el-input {
+  border: 1px solid #CD595A !important;
+  border-radius: 4px;
 }

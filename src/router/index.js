@@ -14,8 +14,8 @@ const routes = [
   {
     path: "/main",
     name: "Main",
-    component: () => import("../modules/layouts/MainUsers.vue"),
-    // meta: { requiresAuth: true },
+    component: () => import("../modules/layouts/MainLayout.vue"),
+    meta: { requiresAuth: true },
     alias: "/",
     children: [
       {
@@ -31,7 +31,7 @@ const routes = [
       {
         path: "clinic",
         name: "Clinic",
-        component: () => import("../modules/main/pages/ClinicVet.vue"),
+        component: () => import("../modules/Clinic/pages/ClinicVet.vue"),
       },
     ],
   },
