@@ -22,20 +22,21 @@
             placeholder="Ingrese Año de Nacimiento"
           />
         </div>
-        <div class="col"></div>
+        <div class="col">
+          <div class="col">
+            <label for="color" class="label-title">Color</label>
+            <el-input
+              name="color"
+              v-model="petForm.color"
+              type="text"
+              placeholder="Ingrese Color"
+            />
+          </div>
+        </div>
       </div>
       <div class="row">
         <div class="col">
-          <label for="color" class="label-title">Color</label>
-          <el-input
-            name="color"
-            v-model="petForm.color"
-            type="text"
-            placeholder="Ingrese Color"
-          />
-        </div>
-        <div class="col">
-          <label for="gender" class="label-title">Genero</label>
+          <label for="gender" class="label-title">Sexo</label>
           <div>
             <el-select
               class="w-100"
@@ -51,12 +52,32 @@
             </el-select>
           </div>
         </div>
+        <div class="col">
+          <div class="col">
+            <label for="bornYear" class="label-title">Categoria</label>
+            <div>
+              <el-select
+                class="w-100"
+                v-model="petForm.dialogCategory"
+                placeholder="Seleciona la Categoria"
+              >
+                <el-option
+                  v-for="item in categories"
+                  :key="item.value"
+                  :label="item.name"
+                  :value="item.value"
+                />
+              </el-select>
+            </div>
+          </div>
+        </div>
+        <div class="col"></div>
       </div>
       <div class="row">
         <div class="col">
           <div class="row">
             <div class="col">
-              <label for="bornYear" class="label-title">Cliente</label>
+              <label for="bornYear" class="label-title">Dueño Mascota:</label>
               <div>
                 <el-select
                   class="w-100"
@@ -74,46 +95,21 @@
             </div>
             <div class="col d-flex align-items-end">
               <div class="d-flex align-items-end">
-                <button class="btn btn-primary" @click="dialogClient = true">
+                <button class="btn btn-helpet" @click="dialogClient = true">
                   Crear Cliente
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="row">
-            <div class="col">
-              <label for="bornYear" class="label-title">Categoria</label>
-              <div>
-                <el-select
-                  class="w-100"
-                  v-model="petForm.dialogCategory"
-                  placeholder="Seleciona la Categoria"
-                >
-                  <el-option
-                    v-for="item in categories"
-                    :key="item.value"
-                    :label="item.name"
-                    :value="item.value"
-                  />
-                </el-select>
-              </div>
-            </div>
-            <div class="col d-flex align-items-end">
-              <div class="d-flex align-items-end">
-                <button class="btn btn-primary" @click="dialogCategory = true">
-                  Crear Categoria
-                </button>
-              </div>
-            </div>
+            <div class="col"></div>
           </div>
         </div>
       </div>
     </section>
     <section class="mt-3">
-      <h3>Información Médica</h3>
       <div class="row">
+        <div class="col">
+          <h3 class="label-title f-25">Información Médica</h3>
+        </div>
         <div class="col">
           <el-select
             class="w-100"
@@ -130,7 +126,7 @@
         </div>
         <div class="col">
           <div class="d-flex align-items-end">
-            <button class="btn btn-primary" @click="dialogHealthInfo = true">
+            <button class="btn btn-helpet" @click="dialogHealthInfo = true">
               Crear Información Médica
             </button>
           </div>
@@ -138,7 +134,7 @@
       </div>
     </section>
     <section class="mt-3">
-      <h2>Comportamiento</h2>
+      <h3 class="label-title f-25">Comportamiento</h3>
       <div class="row">
         <div class="col">
           <label for="specificBehaviors" class="label-title">
@@ -160,6 +156,18 @@
             :min="1"
             :max="50"
           />
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <div>
+            <button class="btn">Descartar</button>
+          </div>
+          <div>
+            <button class="btn btn-helpet">Registrar</button>
+          </div>
         </div>
       </div>
     </section>
