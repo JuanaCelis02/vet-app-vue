@@ -77,15 +77,6 @@ export default {
       recaptchaInstance: null,
     };
   },
-  setup() {
-    const callback = (response) => {
-      console.log("Handle the response", response);
-    };
-
-    return {
-      callback,
-    };
-  },
   methods: {
     ...mapActions("login", ["loginAction"]),
     async loginMethod() {
@@ -113,21 +104,43 @@ export default {
     async verifyRecaptcha() {
       return new Promise((resolve) => {
         if (this.recaptchaInstance) {
-          this.recaptchaInstance.execute();
-          this.recaptchaInstance.reset();
-          resolve(true);
+          const response = window.grecaptcha.getResponse(
+            this.recaptchaInstance
+          );
+          if (response.length > 0) {
+            window.grecaptcha.reset(this.recaptchaInstance);
+            resolve(true);
+          } else {
+            resolve(false);
+          }
         } else {
           resolve(false);
         }
       });
     },
-
-    onSubmit() {},
+    async onSubmit() {
+      try {
+        const recaptchaValid = await this.verifyRecaptcha();
+        if (recaptchaValid) {
+          this.loginMethod();
+        } else {
+          ElMessage({
+            message: "Por favor, complete la verificación reCAPTCHA.",
+            type: "warning",
+          });
+        }
+      } catch (error) {
+        console.error("Error al verificar reCAPTCHA:", error);
+        ElMessage({
+          message: "Error al verificar reCAPTCHA.",
+          type: "error",
+        });
+      }
+    },
   },
   mounted() {
     this.recaptchaInstance = window.grecaptcha.render(this.$refs.recaptcha, {
       sitekey: "6LfF1PQnAAAAABAKnlDnQdragoFNGYkOx3anuxqz",
-      callback: this.onSubmit,
     });
   },
 };
