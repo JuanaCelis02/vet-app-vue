@@ -90,24 +90,16 @@ export default {
     ...mapActions("login", ["loginAction"]),
     async loginMethod() {
       try {
-        const isRecaptchaSolved = await this.verifyRecaptcha();
-        if (isRecaptchaSolved) {
-          const credentials = {
-            username: this.username,
-            password: this.password,
-          };
-          const resLogin = await this.loginAction(credentials);
-          if (resLogin) {
-            this.$router.push("/main");
-          } else {
-            ElMessage({
-              message: "Credenciales Invalidas",
-              type: "error",
-            });
-          }
+        const credentials = {
+          username: this.username,
+          password: this.password,
+        };
+        const resLogin = await this.loginAction(credentials);
+        if (resLogin) {
+          this.$router.push("/main");
         } else {
           ElMessage({
-            message: "Por favor, completa la verificación reCAPTCHA",
+            message: "Credenciales Invalidas",
             type: "error",
           });
         }
@@ -137,7 +129,6 @@ export default {
       sitekey: "6LfF1PQnAAAAABAKnlDnQdragoFNGYkOx3anuxqz",
       callback: this.onSubmit,
     });
-    this.loginWithFacebook();
   },
 };
 </script>
