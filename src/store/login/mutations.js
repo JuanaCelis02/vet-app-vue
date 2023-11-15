@@ -11,3 +11,27 @@ export const getAllUsers = (state, data) => {
 export const logOut = (state) => {
   state.token = "";
 };
+
+export const addClient = (state, client) => {
+  state.clients = [...state.clients, client];
+};
+
+export const getAllClients = (state, clients) => {
+  state.clients = [...clients];
+};
+
+export const createPet = (state, pet) => {
+  state.animals = [...state.animals, pet];
+};
+
+export const getAllBehavior = (state, behaviors) => {
+  state.behaviors = [...behaviors];
+};
+
+export const getAllCategories = (state, categories) => {
+  state.categories = [...categories];
+};
+
+export const getDataTable = (state, data) => {
+  state.tableDate = [...data];
+};

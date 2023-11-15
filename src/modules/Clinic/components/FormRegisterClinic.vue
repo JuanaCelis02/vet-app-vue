@@ -4,7 +4,7 @@
     @update:model-value="$emit('update:showDialogRecord', $event)"
   >
     <template #header>
-      <h4>{{ idRecord ? "Actualizar" : "Crear" }} Registro</h4>
+      <h4>{{ objectRecord ? "Actualizar" : "Crear" }} Registro</h4>
     </template>
     <template #default>
       <section>
@@ -37,21 +37,6 @@
         </div>
         <div class="row">
           <div class="col">
-            <label for="tenant">Tenant</label>
-            <el-select
-              class="w-100"
-              v-model="medicalService.idTenant"
-              placeholder="Selecciona el Tenant"
-            >
-              <el-option
-                v-for="item in tenants"
-                :key="item.value"
-                :label="item.label"
-                :value="item.value"
-              />
-            </el-select>
-          </div>
-          <div class="col">
             <label for="tenant">Nivel de Complejidad</label>
             <el-select
               class="w-100"
@@ -66,6 +51,7 @@
               />
             </el-select>
           </div>
+          <div class="col"></div>
         </div>
         <div class="row">
           <label for="description">Descripción</label>
@@ -79,13 +65,16 @@
         <div class="d-flex justify-content-between">
           <div></div>
           <div>
-            <button class="btn btn-primary mt-2">
-              {{ idRecord ? "Actualizar" : "Crear" }} Servicio Medico
+            <button
+              class="btn btn-helpet mt-2"
+              @click="createMedicalServiceForm"
+            >
+              {{ objectRecord ? "Actualizar" : "Crear" }} Servicio Medico
             </button>
           </div>
         </div>
       </section>
-      <section>
+      <section class="mt-2">
         <h3>Servicio Mascota</h3>
         <div class="row">
           <div class="col">
@@ -134,8 +123,8 @@
         <div class="d-flex justify-content-between">
           <div></div>
           <div>
-            <button class="btn btn-primary mt-2">
-              {{ idRecord ? "Actualizar" : "Crear" }} Servicio Mascota
+            <button class="btn btn-helpet mt-2" @click="createAnimalService">
+              {{ objectRecord ? "Actualizar" : "Crear" }} Servicio Mascota
             </button>
           </div>
         </div>
@@ -199,9 +188,12 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+import { ElMessage } from "element-plus";
+
 export default {
   props: {
-    idRecord: String,
+    objectRecord: Object,
     showDialogRecord: Boolean,
   },
   data() {
@@ -224,13 +216,12 @@ export default {
         { value: "Significativo" },
         { value: "Grave" },
       ],
-      tenants: [],
       animals: [],
       medicalService: {
         nameService: "",
         description: "",
         status: "",
-        idTenant: "",
+        idTenant: sessionStorage.getItem("id_tenant") || 1,
         complecityLevel: "",
       },
       animalService: {
@@ -253,6 +244,36 @@ export default {
       },
       fileList: "",
     };
+  },
+  methods: {
+    ...mapActions("login", [
+      "createMedicalService",
+      "createPetService",
+      "getBehavior",
+    ]),
+    async createMedicalServiceForm() {
+      const resp = this.createMedicalService(this.medicalService);
+      if (resp) {
+        ElMessage({
+          message: "Servicio Médico Creado con Exito",
+          type: "success",
+        });
+      }
+    },
+    async createAnimalService() {
+      const resp = await this.createPetService(this.animalService);
+      if (resp) {
+        ElMessage({
+          message: "Servicio Mascota Creado con Exito",
+          type: "success",
+        });
+      }
+    },
+  },
+  async created() {
+    console.log(this.objectRecord);
+    // const behavior = await this.getBehavior(this.objectRecord.behaviorId);
+    // console.log(behavior);
   },
 };
 </script>

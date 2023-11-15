@@ -31,6 +31,10 @@ export default {
                 .then((response) => response.json())
                 .then((data) => {
                   console.log("Datos del usuario:", data);
+                  sessionStorage.setItem("token", data.id);
+                  if (data.id) {
+                    this.$router.push("/main");
+                  }
                   // Aquí puedes realizar acciones adicionales con los datos del usuario
                 })
                 .catch((error) => {
