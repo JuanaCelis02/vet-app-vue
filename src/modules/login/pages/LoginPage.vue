@@ -111,6 +111,47 @@ export default {
         });
       }
     },
+    async verifyRecaptcha() {
+      return new Promise((resolve) => {
+        if (this.recaptchaInstance) {
+          const response = window.grecaptcha.getResponse(
+            this.recaptchaInstance
+          );
+          if (response.length > 0) {
+            window.grecaptcha.reset(this.recaptchaInstance);
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        } else {
+          resolve(false);
+        }
+      });
+    },
+    async onSubmit() {
+      try {
+        const recaptchaValid = await this.verifyRecaptcha();
+        if (recaptchaValid) {
+          this.loginMethod();
+        } else {
+          ElMessage({
+            message: "Por favor, complete la verificación reCAPTCHA.",
+            type: "warning",
+          });
+        }
+      } catch (error) {
+        console.error("Error al verificar reCAPTCHA:", error);
+        ElMessage({
+          message: "Error al verificar reCAPTCHA.",
+          type: "error",
+        });
+      }
+    },
+  },
+  mounted() {
+    this.recaptchaInstance = window?.grecaptcha?.render(this.$refs.recaptcha, {
+      sitekey: "6LfF1PQnAAAAABAKnlDnQdragoFNGYkOx3anuxqz",
+    });
   },
 };
 </script>
